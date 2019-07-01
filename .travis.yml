@@ -18,9 +18,10 @@ addons:
     packages:
       - docker-ce
 
-#before_install:
+before_install:
   ## Add token for @dashevo private npm registry
   #- echo "//registry.npmjs.org/:_authToken=\${NPM_TOKEN}" > .npmrc
+  docker pull pseudomuto/protoc-gen-doc
 
 install: npm ci
 
@@ -31,8 +32,14 @@ script:
   - npm run check-package
 
 deploy:
-  provider: script
-  script: bash scripts/travis-deploy.sh
-  on:
-    tags: true
-    repo: thephez/dapi-grpc
+  - provider: script
+    script: bash scripts/travis-deploy.sh
+    on:
+      tags: true
+      repo: dashevo/dapi-grpc
+  - provider: script
+    skip_cleanup: true
+    script: bash scripts/travis-deploy-grpc-docs.sh
+    on:
+      repo: thephez/dapi-grpc
+      all_branches: true
