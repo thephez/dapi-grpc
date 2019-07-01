@@ -22,4 +22,4 @@ if [ "$PACKAGE_TAG" != "$TRAVIS_TAG" ]; then
 fi
 
 # Now that checks have been passed, publish the module
-npm publish
+#npm publish
