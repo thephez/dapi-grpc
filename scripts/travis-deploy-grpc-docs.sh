@@ -23,7 +23,31 @@ PACKAGE_TAG=v"$(jq -r .version package.json)"
 
 mkdir out
 docker run --rm -v $(pwd)/out:/out  -v $(pwd)/protos:/protos pseudomuto/protoc-gen-doc
-cat out/index.html
+cp out/index.html  ../index.html
+#cat out/index.html
 
-# Now that checks have been passed, publish the module
-#npm publish
+# Get all repo branches
+git config remote.origin.fetch refs/heads/*:refs/remotes/origin/*
+git fetch --unshallow
+
+# Delete unnecessary files
+rm -rf ../dapi-grpc/* .nyc_output
+rm -f .editorconfig .eslintignore .eslintrc .gitignore .travis.yml
+
+# Create or checkout branch
+if [ -n "$(git rev-parse --quiet --verify origin/gh-pages)" ]; then
+  git checkout -f gh-pages
+else
+  git checkout --orphan gh-pages
+  git rm -rf .
+fi
+
+# Put spec file back into folder and check for changes
+cp ../index.html .
+
+# Add all files (spec and static html page)
+git add -A
+git commit -m "Travis-built spec for version \"${VERSION}\""
+
+git remote add origin-grpc-docs https://${GH_TOKEN}@github.com/thephez/dapi.git > /dev/null 2>&1
+git push -u origin-grpc-docs gh-pages
