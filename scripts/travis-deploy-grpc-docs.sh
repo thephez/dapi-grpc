@@ -27,11 +27,12 @@ cp out/index.html  ../index.html
 #cat out/index.html
 
 # Get all repo branches
-git config remote.origin.fetch refs/heads/*:refs/remotes/origin/*
-git fetch --unshallow
+git clone https://${GH_TOKEN}@github.com/thephez/dapi-grpc.git ../dapi-grpc-docs
+cd ../dapi-grpc-docs
+git fetch --all
 
 # Delete unnecessary files
-rm -rf ../dapi-grpc/* .nyc_output
+rm -rf ../dapi-grpc-docs/* .nyc_output
 rm -f .editorconfig .eslintignore .eslintrc .gitignore .travis.yml
 
 # Create or checkout branch
@@ -47,7 +48,7 @@ cp ../index.html .
 
 # Add all files (spec and static html page)
 git add -A
-git commit -m "Travis-built spec for version \"${VERSION}\""
+git commit -m "Travis-built docs"
 
-git remote add origin-grpc-docs https://${GH_TOKEN}@github.com/thephez/dapi.git > /dev/null 2>&1
-git push -u origin-grpc-docs gh-pages
+#git remote add origin-grpc-docs https://${GH_TOKEN}@github.com/thephez/dapi.git > /dev/null 2>&1
+git push -u origin gh-pages
