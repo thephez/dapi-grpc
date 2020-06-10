@@ -2,8 +2,14 @@ syntax = "proto3";
 
 package org.dash.platform.dapi.v0;
 
+import "google/api/annotations.proto";
+
 service Core {
-  rpc getStatus (GetStatusRequest) returns (GetStatusResponse);
+  rpc getStatus (GetStatusRequest) returns (GetStatusResponse) {
+    option (google.api.http) = {
+      get: "/v1/status"
+    };
+  }
   rpc getBlock (GetBlockRequest) returns (GetBlockResponse);
   rpc sendTransaction (SendTransactionRequest) returns (SendTransactionResponse);
   rpc getTransaction (GetTransactionRequest) returns (GetTransactionResponse);
