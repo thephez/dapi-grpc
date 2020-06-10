@@ -9,33 +9,33 @@ WEB_OUT_PATH="$CLIENTS_PATH/web"
 
 rm -rf "$WEB_OUT_PATH/*"
 
-docker run -v "$PROTO_PATH:$PROTO_PATH" \
-           -v "$WEB_OUT_PATH:$WEB_OUT_PATH" \
-           --rm \
-           grpcweb/common \
-           protoc -I="$PROTO_PATH" "core.proto" \
-                   --js_out="import_style=commonjs:$WEB_OUT_PATH" \
-                   --grpc-web_out="import_style=commonjs,mode=grpcwebtext:$WEB_OUT_PATH"
+# docker run -v "$PROTO_PATH:$PROTO_PATH" \
+#            -v "$WEB_OUT_PATH:$WEB_OUT_PATH" \
+#            --rm \
+#            grpcweb/common \
+#            protoc -I="$PROTO_PATH" "core.proto" \
+#                    --js_out="import_style=commonjs:$WEB_OUT_PATH" \
+#                    --grpc-web_out="import_style=commonjs,mode=grpcwebtext:$WEB_OUT_PATH"
 
-# Generate GRPC-Web client for `Platform` service
+# # Generate GRPC-Web client for `Platform` service
 
-docker run -v "$PROTO_PATH:$PROTO_PATH" \
-           -v "$WEB_OUT_PATH:$WEB_OUT_PATH" \
-           --rm \
-           grpcweb/common \
-           protoc -I="$PROTO_PATH" "platform.proto" \
-                   --js_out="import_style=commonjs:$WEB_OUT_PATH" \
-                   --grpc-web_out="import_style=commonjs,mode=grpcwebtext:$WEB_OUT_PATH"
+# docker run -v "$PROTO_PATH:$PROTO_PATH" \
+#            -v "$WEB_OUT_PATH:$WEB_OUT_PATH" \
+#            --rm \
+#            grpcweb/common \
+#            protoc -I="$PROTO_PATH" "platform.proto" \
+#                    --js_out="import_style=commonjs:$WEB_OUT_PATH" \
+#                    --grpc-web_out="import_style=commonjs,mode=grpcwebtext:$WEB_OUT_PATH"
 
-# Generate GRPC-Web client for `TransactionsFilterStream` service
+# # Generate GRPC-Web client for `TransactionsFilterStream` service
 
-docker run -v "$PROTO_PATH:$PROTO_PATH" \
-           -v "$WEB_OUT_PATH:$WEB_OUT_PATH" \
-           --rm \
-           grpcweb/common \
-           protoc -I="$PROTO_PATH" "transactions_filter_stream.proto" \
-                   --js_out="import_style=commonjs:$WEB_OUT_PATH" \
-                   --grpc-web_out="import_style=commonjs,mode=grpcwebtext:$WEB_OUT_PATH"
+# docker run -v "$PROTO_PATH:$PROTO_PATH" \
+#            -v "$WEB_OUT_PATH:$WEB_OUT_PATH" \
+#            --rm \
+#            grpcweb/common \
+#            protoc -I="$PROTO_PATH" "transactions_filter_stream.proto" \
+#                    --js_out="import_style=commonjs:$WEB_OUT_PATH" \
+#                    --grpc-web_out="import_style=commonjs,mode=grpcwebtext:$WEB_OUT_PATH"
 
 # Clean node message classes
 
@@ -76,8 +76,8 @@ JAVA_OUT_PATH="$CLIENTS_PATH/java"
 
 rm -rf "$JAVA_OUT_PATH/*"
 
-docker run -v "$PROTO_PATH:$PROTO_PATH" \
-           -v "$JAVA_OUT_PATH:$JAVA_OUT_PATH" \
+docker run -v $(pwd):$(pwd) \
+           -w $(pwd) \
            --rm \
            znly/protoc \
            --plugin=protoc-gen-grpc=/usr/bin/protoc-gen-grpc-java \
@@ -88,8 +88,8 @@ docker run -v "$PROTO_PATH:$PROTO_PATH" \
 
 # Generate GRPC Java client for `Platform`
 
-docker run -v "$PROTO_PATH:$PROTO_PATH" \
-           -v "$JAVA_OUT_PATH:$JAVA_OUT_PATH" \
+docker run -v $(pwd):$(pwd) \
+           -w $(pwd) \
            --rm \
            znly/protoc \
            --plugin=protoc-gen-grpc=/usr/bin/protoc-gen-grpc-java \
@@ -100,8 +100,8 @@ docker run -v "$PROTO_PATH:$PROTO_PATH" \
 
 # Generate GRPC Java client for `TransactionsFilterStream`
 
-docker run -v "$PROTO_PATH:$PROTO_PATH" \
-           -v "$JAVA_OUT_PATH:$JAVA_OUT_PATH" \
+docker run -v $(pwd):$(pwd) \
+           -w $(pwd) \
            --rm \
            znly/protoc \
            --plugin=protoc-gen-grpc=/usr/bin/protoc-gen-grpc-java \
@@ -116,8 +116,8 @@ OBJ_C_OUT_PATH="$CLIENTS_PATH/objective-c"
 
 rm -rf "$OBJ_C_OUT_PATH/*"
 
-docker run -v "$PROTO_PATH:$PROTO_PATH" \
-           -v "$OBJ_C_OUT_PATH:$OBJ_C_OUT_PATH" \
+docker run -v $(pwd):$(pwd) \
+           -w $(pwd) \
            --rm \
            znly/protoc \
            --plugin=protoc-gen-grpc=/usr/bin/grpc_objective_c_plugin \
@@ -129,8 +129,8 @@ docker run -v "$PROTO_PATH:$PROTO_PATH" \
 
 # Generate GRPC Objective-C client for `Platform`
 
-docker run -v "$PROTO_PATH:$PROTO_PATH" \
-           -v "$OBJ_C_OUT_PATH:$OBJ_C_OUT_PATH" \
+docker run -v $(pwd):$(pwd) \
+           -w $(pwd) \
            --rm \
            znly/protoc \
            --plugin=protoc-gen-grpc=/usr/bin/grpc_objective_c_plugin \
@@ -142,8 +142,8 @@ docker run -v "$PROTO_PATH:$PROTO_PATH" \
 
 # Generate GRPC Objective-C client for `TransactionsFilterStream`
 
-docker run -v "$PROTO_PATH:$PROTO_PATH" \
-           -v "$OBJ_C_OUT_PATH:$OBJ_C_OUT_PATH" \
+docker run -v $(pwd):$(pwd) \
+           -w $(pwd) \
            --rm \
            znly/protoc \
            --plugin=protoc-gen-grpc=/usr/bin/grpc_objective_c_plugin \
@@ -159,8 +159,8 @@ PYTHON_OUT_PATH="$CLIENTS_PATH/python"
 
 rm -rf "$PYTHON_OUT_PATH/*"
 
-docker run -v "$PROTO_PATH:$PROTO_PATH" \
-           -v "$PYTHON_OUT_PATH:$PYTHON_OUT_PATH" \
+docker run -v $(pwd):$(pwd) \
+           -w $(pwd) \
            --rm \
            znly/protoc \
            --plugin=protoc-gen-grpc=/usr/bin/grpc_python_plugin \
@@ -172,8 +172,8 @@ docker run -v "$PROTO_PATH:$PROTO_PATH" \
 
 # Generate GRPC Python client for `Platform`
 
-docker run -v "$PROTO_PATH:$PROTO_PATH" \
-          -v "$PYTHON_OUT_PATH:$PYTHON_OUT_PATH" \
+docker run -v $(pwd):$(pwd) \
+          -w $(pwd) \
           --rm \
           znly/protoc \
           --plugin=protoc-gen-grpc=/usr/bin/grpc_python_plugin \
@@ -185,8 +185,8 @@ docker run -v "$PROTO_PATH:$PROTO_PATH" \
 
 # Generate GRPC Python client for `TransactionsFilterStream`
 
-docker run -v "$PROTO_PATH:$PROTO_PATH" \
-          -v "$PYTHON_OUT_PATH:$PYTHON_OUT_PATH" \
+docker run -v $(pwd):$(pwd) \
+          -w $(pwd) \
           --rm \
           znly/protoc \
           --plugin=protoc-gen-grpc=/usr/bin/grpc_python_plugin \
